@@ -11,4 +11,4 @@ compatibility_date = "2024-01-01"
 #   wrangler secret put ALLOWED_ORIGIN
 
 [vars]
-ALLOWED_ORIGIN = "https://swiftrand.co.za"
+ALLOWED_ORIGIN = "https://swiftrand.pages.dev"
