@@ -559,14 +559,26 @@ footer strong{color:#fff}
            ondragover="event.preventDefault();this.classList.add('drag')"
            ondragleave="this.classList.remove('drag')"
            ondrop="handleDrop(event)">
-        <input type="file" id="f-receipt" accept="image/*" capture="environment" onchange="handleFile(this.files[0])"/>
+        <input type="file" id="f-receipt" accept="image/*" onchange="handleFile(this.files[0])"/>
         <div class="icon">📷</div>
         <p><strong>Take a photo or upload a screenshot</strong></p>
-        <p class="hint">Snap your receipt with your camera, or attach a screenshot · JPG or PNG · max 5 MB</p>
+        <p class="hint">Use camera, gallery, or attach a screenshot · JPG or PNG · max 5 MB</p>
       </div>
       <div class="upload-preview" id="upload-preview">
         <img id="preview-img" src="" alt="Receipt preview"/>
-        <span class="remove" onclick="removeReceipt()">✕ Remove photo</span>
+        <p style="font-size:.82rem;color:var(--ink2);margin:10px 0 4px;font-weight:600">Is the receipt clear and readable?</p>
+        <div style="display:flex;gap:10px;margin-top:6px">
+          <button onclick="confirmReceipt()" id="btn-confirm-receipt"
+            style="flex:1;padding:10px;background:var(--green);color:#fff;border:none;border-radius:9px;
+            font-weight:700;font-size:.88rem;cursor:pointer">✓ Yes, looks good</button>
+          <button onclick="removeReceipt()"
+            style="flex:1;padding:10px;background:none;border:1.5px solid var(--border);border-radius:9px;
+            font-weight:600;font-size:.88rem;cursor:pointer;color:var(--ink2)">↺ Retake / Change</button>
+        </div>
+        <div id="receipt-confirmed" style="display:none;margin-top:10px;background:var(--green-lt);
+          border:1px solid #A8DFCA;border-radius:9px;padding:10px 14px;font-size:.82rem;color:#0A6640;font-weight:600">
+          ✅ Receipt confirmed — ready to submit
+        </div>
       </div>
     </div>
 
@@ -742,6 +754,10 @@ function validate(n) {
     } else {
       errEl.style.display = 'none';
     }
+    if (receiptBase64 && !receiptConfirmed) {
+      showToast('❌ Please confirm your receipt is clear before submitting.', true);
+      ok = false;
+    }
   }
   return ok;
 }
@@ -789,38 +805,46 @@ function resetOTTFields() {
   document.getElementById('ott-err').style.display = 'none';
   removeReceipt();
 }
-
-// ── Receipt photo upload ──────────────────────────
-let receiptBase64 = null;
-let receiptMime   = null;
+let receiptBase64     = null;
+let receiptMime       = null;
+let receiptConfirmed  = false;
 
 function handleFile(file) {
   if (!file) return;
   if (file.size > 5 * 1024 * 1024) { showToast('❌ File too large — max 5 MB.', true); return; }
   if (!file.type.startsWith('image/')) { showToast('❌ Please upload a JPG or PNG image.', true); return; }
-  receiptMime = file.type;
+  receiptMime      = file.type;
+  receiptConfirmed = false;
   const reader = new FileReader();
   reader.onload = e => {
-    receiptBase64 = e.target.result.split(',')[1]; // strip data:...;base64,
+    receiptBase64 = e.target.result.split(',')[1];
     document.getElementById('preview-img').src = e.target.result;
     document.getElementById('upload-preview').style.display = '';
     document.getElementById('upload-box').style.display = 'none';
+    document.getElementById('btn-confirm-receipt').style.display = '';
+    document.getElementById('receipt-confirmed').style.display = 'none';
   };
   reader.readAsDataURL(file);
 }
 function handleDrop(e) {
   e.preventDefault();
   document.getElementById('upload-box').classList.remove('drag');
-  const file = e.dataTransfer.files[0];
-  if (file) handleFile(file);
+  handleFile(e.dataTransfer.files[0]);
+}
+function confirmReceipt() {
+  receiptConfirmed = true;
+  document.getElementById('btn-confirm-receipt').style.display = 'none';
+  document.getElementById('receipt-confirmed').style.display = '';
 }
 function removeReceipt() {
-  receiptBase64 = null;
-  receiptMime   = null;
+  receiptBase64    = null;
+  receiptMime      = null;
+  receiptConfirmed = false;
   document.getElementById('f-receipt').value = '';
   document.getElementById('preview-img').src = '';
   document.getElementById('upload-preview').style.display = 'none';
   document.getElementById('upload-box').style.display = '';
+  document.getElementById('receipt-confirmed').style.display = 'none';
 }
 
 // ── Submit ────────────────────────────────────────
