@@ -844,11 +844,45 @@ input[type=range]::-webkit-slider-thumb{
           Upload a photo or screenshot of your One Voucher receipt from your gallery.
         </p>
 
-        <div class="upload-zone" id="upload-box" onclick="document.getElementById('f-receipt').click()">
-          <input type="file" id="f-receipt" accept="image/*" onchange="handleFile(this.files[0])"/>
+        <!-- Two hidden inputs — one forces camera, one opens gallery -->
+        <input type="file" id="f-camera"  accept="image/*" capture="environment" onchange="handleFile(this.files[0])" style="display:none"/>
+        <input type="file" id="f-gallery" accept="image/*" onchange="handleFile(this.files[0])" style="display:none"/>
+
+        <div class="upload-zone" id="upload-box" onclick="openPickerSheet()">
           <div class="uz-icon">📷</div>
-          <div class="uz-label">Camera or Gallery</div>
-          <div class="uz-hint">Take a photo or choose from gallery · JPG or PNG · max 5 MB</div>
+          <div class="uz-label">Add Receipt Photo</div>
+          <div class="uz-hint">Tap to choose how to add your photo</div>
+        </div>
+
+        <!-- Bottom sheet -->
+        <div id="picker-overlay" onclick="closePickerSheet()"
+          style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:400"></div>
+        <div id="picker-sheet"
+          style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:401;
+            background:var(--c-surface);border-radius:20px 20px 0 0;
+            padding:12px 16px calc(16px + var(--safe-bot));box-shadow:0 -4px 32px rgba(0,0,0,.15)">
+          <div style="width:40px;height:4px;background:var(--c-border);border-radius:99px;margin:0 auto 20px"></div>
+          <div style="font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:14px">Add receipt photo</div>
+          <button onclick="closePickerSheet();setTimeout(()=>document.getElementById('f-camera').click(),80)"
+            style="width:100%;display:flex;align-items:center;gap:14px;padding:14px 16px;
+              background:var(--c-surface2);border:1px solid var(--c-border);border-radius:var(--r12);
+              margin-bottom:10px;font-size:.9rem;font-weight:600;color:var(--c-ink);text-align:left">
+            <span style="font-size:1.5rem">📷</span>
+            <div><div style="font-weight:700">Take a photo</div><div style="font-size:.75rem;color:var(--c-ink3);margin-top:1px">Open camera to snap your receipt</div></div>
+          </button>
+          <button onclick="closePickerSheet();setTimeout(()=>document.getElementById('f-gallery').click(),80)"
+            style="width:100%;display:flex;align-items:center;gap:14px;padding:14px 16px;
+              background:var(--c-surface2);border:1px solid var(--c-border);border-radius:var(--r12);
+              margin-bottom:10px;font-size:.9rem;font-weight:600;color:var(--c-ink);text-align:left">
+            <span style="font-size:1.5rem">🖼️</span>
+            <div><div style="font-weight:700">Choose from gallery</div><div style="font-size:.75rem;color:var(--c-ink3);margin-top:1px">Pick a photo or screenshot you already have</div></div>
+          </button>
+          <button onclick="closePickerSheet()"
+            style="width:100%;padding:14px;border-radius:var(--r12);
+              background:none;border:1.5px solid var(--c-border);
+              font-size:.88rem;font-weight:600;color:var(--c-ink2)">
+            Cancel
+          </button>
         </div>
 
         <div class="preview-wrap" id="preview-wrap">
@@ -1071,6 +1105,18 @@ function getOTT() {
   return (document.getElementById('f-ott').value || '').replace(/\D/g,'');
 }
 
+// ── Picker sheet ──────────────────────────────────
+function openPickerSheet() {
+  document.getElementById('picker-overlay').style.display = 'block';
+  document.getElementById('picker-sheet').style.display   = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closePickerSheet() {
+  document.getElementById('picker-overlay').style.display = 'none';
+  document.getElementById('picker-sheet').style.display   = 'none';
+  document.body.style.overflow = '';
+}
+
 // ── Receipt upload ────────────────────────────────
 let receiptBase64 = null, receiptMime = null, receiptConfirmed = false;
 
@@ -1108,7 +1154,10 @@ function confirmReceipt() {
 
 function removeReceipt() {
   receiptBase64 = null; receiptMime = null; receiptConfirmed = false;
-  document.getElementById('f-receipt').value = '';
+  const fc = document.getElementById('f-camera');
+  const fg = document.getElementById('f-gallery');
+  if (fc) fc.value = '';
+  if (fg) fg.value = '';
   document.getElementById('preview-img').src = '';
   document.getElementById('preview-wrap').style.display    = 'none';
   document.getElementById('upload-box').style.display      = 'flex';
